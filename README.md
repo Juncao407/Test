@@ -42,14 +42,14 @@ EVENT_ELAPSED_TIME  ────► Time Encoder (MLP) ────► h_time �
 ocel/*.csv ──(0)──► data-prepro/ ──(1)──► outliers/ ──(2)──► process_graphs/ + process_tables/ ──(3/4/5)──► results/
 ```
 
-| Stage                   | Script                                                                                                                        | Description                                                                                                 |
-|-------------------------|-------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-| 0. Preprocessing        | [`0_data_preprocessing.py`](0_data_preprocessing.py)                                                                          | Cleans raw OCEL CSVs (BPIC 2017, DS2, BPI 2013) into a normalized event table.                              |
+| Stage                   | Script                                                                                                                        | Description                                                                                               |
+|-------------------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| 0. Preprocessing        | [`0_data_preprocessing.py`](0_data_preprocessing.py)                                                                          | Cleans raw OCEL CSVs (BPIC 2017, DS2, BPI 2013) into a normalized event table.                            |
 | 1. Outlier injection    | [`1_outlier_injection_multi_rates.py`](1_outlier_injection_multi_rates.py) | Injects three anomaly types at one or several contamination rates (0.05–0.4) and saves ground-truth labels. |
-| 2. Process encoding     | [`2_process_encoding_multi_rates.py`](2_process_encoding_multi_rates.py)    | Uses `ocpa` to build process graphs (`.sav`) and flat/sequential process tables.                            |
-| 3. Graph model training | [`3_training_gcnae.py`](3_training_gcnae.py)                                                                                  | Trains GCN-AE and TGCAE on the process graphs.                                                              |
-| 4. Other model training | [`4_training_others.py`](4_training_others.py)                                                                                | Trains the flat AE and LSTM-AE baselines on the process tables.                                             |
-| 5. Graph model training | [`5_training_tgcae.py`](5_training_tgcae.py)                                                                                  | Trains TGCAE on the process graphs.                                                                         |
+| 2. Process encoding     | [`2_process_encoding_multi_rates.py`](2_process_encoding_multi_rates.py)    | Uses `ocpa` to build process graphs (`.sav`) and flat/sequential process tables.                          |
+| 3. Graph model training | [`3_training_gcnae.py`](3_training_gcnae.py)                                                                                  | Trains GCNAE on the process graphs.                                                              |
+| 4. Other model training | [`4_training_others.py`](4_training_others.py)                                                                                | Trains the flat AE and LSTMAE baselines on the process tables.                                            |
+| 5. Graph model training | [`5_training_tgcae.py`](5_training_tgcae.py)                                                                                  | Trains TGCAE on the process graphs.                                                                       |
 
 ## Installation
 
@@ -92,7 +92,7 @@ python 2_process_encoding_multi_rates.py
 # Stage 3: train & evaluate GCNAE
 python 3_training_gcnae.py
 
-# Stage 4: train & evaluate AE and LSTM-AE baselines
+# Stage 4: train & evaluate AE and LSTMAE baselines
 python 4_training_others.py
 
 # Stage 5: train & evaluate TGCAE
